@@ -4,7 +4,7 @@ import { useState } from "react";
 
 type Lang = "mn" | "en";
 
-const content = {
+const content: Record<Lang, any> = {
   mn: {
     nav: {
       about: "Бидний тухай",
@@ -23,7 +23,7 @@ const content = {
     about: {
       title: "Бидний тухай",
       description1:
-        "Бид байгууллагуудад тодорхой хэрэгцээ, тодорхой үнэ цэнтэй үйлчилгээг нийлүүлэхийг зорьж байна."
+        "Бид байгууллагуудад тодорхой хэрэгцээ, тодорхой үнэ цэнтэй үйлчилгээг нийлүүлэхийг зорьж байна.",
       description2:
         "Бид зах зээлд шаардлагатай бөгөөд бодит хэрэгцээнд нийцсэн, өргөжих боломжтой бизнесийн шийдлүүдийг хөгжүүлнэ.",
       description3:
@@ -31,8 +31,7 @@ const content = {
     },
     services: {
       title: "Үйлчилгээ",
-      intro:
-        "Хэрэгжүүлж байгаа төслүүд",
+      intro: "Хэрэгжүүлж байгаа төслүүд",
       veloraTitle: "Velora Mobility",
       veloraText:
         "Байгууллага болон тодорхой хэрэгцээтэй харилцагчдад зориулсан жолоочийн outsourcing үйлчилгээ.",
@@ -137,8 +136,7 @@ const content = {
     },
     jobs: {
       title: "Open Positions",
-      intro:
-        "We are open to working with people who want to grow with us.",
+      intro: "We are open to working with people who want to grow with us.",
       cards: [
         {
           title: "Driver",
@@ -173,7 +171,7 @@ const content = {
 
 export default function Page() {
   const [lang, setLang] = useState<Lang>("mn");
-  const t = content[lang];
+  const t = content[lang as Lang];
 
   const scrollToId = (id: string) => {
     const el = document.getElementById(id);
@@ -324,8 +322,6 @@ export default function Page() {
               <p className="mt-6 text-sm text-white/50">
                 {t.services.veloraSubtext}
               </p>
-
-              
             </div>
 
             <div className="rounded-[1.75rem] border border-[#c8a96b]/20 bg-[#c8a96b]/5 p-8">
@@ -383,7 +379,7 @@ export default function Page() {
           </div>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {t.jobs.cards.map((card) => (
+            {t.jobs.cards.map((card: { title: string; text: string }) => (
               <div
                 key={card.title}
                 className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8"
