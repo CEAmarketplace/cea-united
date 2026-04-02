@@ -14,30 +14,30 @@ const content = {
       contact: "Холбоо барих",
     },
     hero: {
-      subtitle: "Бизнес, платформ, хөдөлгөөний шийдэл",
+      subtitle: "Бизнесийн тасралтгүй үйл ажиллагааг дэмжих шийдэл",
       description:
-        "CEA United нь үйлчилгээ, платформ, хөдөлгөөний чиглэлд төвлөрсөн уян хатан бизнесийн бүтэцтэй компани юм.",
+        "Бид уян хатан, хэрэгжихүйц, өсөх боломжтой бизнесийн шийдлүүдийг хөгжүүлнэ.",
       primary: "Холбоо барих",
       secondary: "Үйлчилгээ",
     },
     about: {
       title: "Бидний тухай",
       description1:
-        "CEA United нь шинэ үеийн үйлчилгээ, платформ, mobility чиглэлийн төслүүдийг хөгжүүлэх зорилготой компани юм.",
+        "Бид байгууллагуудад тодорхой хэрэгцээ, тодорхой үнэ цэнтэй үйлчилгээг нийлүүлэхийг зорьж байна."
       description2:
-        "Бид нэг бүтээгдэхүүнээр хязгаарлагдахгүйгээр бодит хэрэгцээнд нийцсэн, өргөжих боломжтой бизнесийн шийдлүүдийг шат дараатайгаар хөгжүүлнэ.",
+        "Бид зах зээлд шаардлагатай бөгөөд бодит хэрэгцээнд нийцсэн, өргөжих боломжтой бизнесийн шийдлүүдийг хөгжүүлнэ.",
       description3:
-        "Манай зорилго бол цөөн боловч зөв чиглэлд төвлөрч, хүчтэй брэндүүдийг нэг экосистем дор бий болгох юм.",
+        "Цаашид өөр хоорондоо уялдаа хамааралтай, цаг үедээ нийцсэн бүтээгдэхүүнийг түгээх болно.",
     },
     services: {
       title: "Үйлчилгээ",
       intro:
-        "CEA United нь тодорхой чиглэлд төвлөрсөн, шат дараатайгаар хөгжих үйлчилгээ, платформуудыг бий болгоно.",
+        "Хэрэгжүүлж байгаа төслүүд",
       veloraTitle: "Velora Mobility",
       veloraText:
-        "Байгууллага болон тодорхой хэрэгцээтэй харилцагчдад зориулсан уян хатан жолоочийн үйлчилгээ.",
+        "Байгууллага болон тодорхой хэрэгцээтэй харилцагчдад зориулсан жолоочийн outsourcing үйлчилгээ.",
       veloraSubtext:
-        "Flexible driver service designed for controlled, professional environments.",
+        "Та өөрийн бизнесийн болон хувийн хэрэгцээндээ нийцсэн нөхцлөөр манай үйлчилгээг авах боломжтой.",
       veloraButton: "Дэлгэрэнгүй",
       marketplaceTitle: "Marketplace",
       marketplaceText:
@@ -51,12 +51,12 @@ const content = {
       badge: "Coming soon",
       text1: "CEA United Marketplace тун удахгүй.",
       text2:
-        "Ирээдүйд үйлчилгээ, захиалга, хамтын ажиллагааны урсгалыг илүү хялбар холбосон platform хэлбэрээр хөгжүүлнэ.",
+        "Ирээдүйд үйлчилгээ, захиалга, хамтын ажиллагааны урсгалыг илүү хялбар холбосон цогц платформ хэлбэрээр хөгжүүлнэ.",
     },
     jobs: {
       title: "Нээлттэй ажлын байр",
       intro:
-        "Манай төслүүдтэй хамт өсөх сонирхолтой хүмүүст боломж нээлттэй.",
+        "Манай байгууллагатай хамт өсөх сонирхолтой бүх хүмүүст боломж нээлттэй.",
       cards: [
         {
           title: "Жолооч",
@@ -68,7 +68,7 @@ const content = {
         },
         {
           title: "Ирээдүйн нээлттэй боломжууд",
-          text: "Marketplace болон platform өсөхийн хэрээр шинэ ажлын байрууд шат дараатайгаар нэмэгдэнэ.",
+          text: "Marketplace өсөхийн хэрээр шинэ ажлын байрууд нэмэгдэнэ.",
         },
       ],
       cta: "Холбоо барих",
@@ -81,7 +81,7 @@ const content = {
       emailLabel: "И-мэйл",
       addressLabel: "Байршил",
       cta: "И-мэйл илгээх",
-      phone: "+976 9923 9036",
+      phone: "+976 9500 8530",
       email: "info@ceaunited.com",
       address: "Ulaanbaatar, Mongolia",
     },
@@ -96,20 +96,20 @@ const content = {
       contact: "Contact",
     },
     hero: {
-      subtitle: "Business, platform, and mobility solutions",
+      subtitle: "A solution that supports continuous business operations",
       description:
-        "CEA United is a flexible business company focused on services, platforms, and mobility-oriented ventures.",
+        "Flexible, practical, and scalable solutions built for real business needs.",
       primary: "Contact",
       secondary: "Services",
     },
     about: {
       title: "About",
       description1:
-        "CEA United is a company built to develop modern service, platform, and mobility-oriented businesses.",
+        "Our company aims to deliver services with clear purpose and defined value for organizations.",
       description2:
-        "Rather than being limited to a single product, we build scalable solutions step by step around real market needs.",
+        "We develop scalable business solutions built around real market needs.",
       description3:
-        "Our goal is to create strong brands under one ecosystem with clear focus and long-term growth potential.",
+        "We build interconnected products that evolve with time and remain relevant.",
     },
     services: {
       title: "Services",
@@ -117,9 +117,9 @@ const content = {
         "CEA United builds focused services and platforms designed to scale in structured phases.",
       veloraTitle: "Velora Mobility",
       veloraText:
-        "Flexible driver support for organizations and selected client needs.",
+        "A driver outsourcing service designed for organizations and clients with defined mobility needs.",
       veloraSubtext:
-        "Mobility service focused on flexibility, reliability, and controlled operations.",
+        "Our services can be tailored to meet both your business and personal needs.",
       veloraButton: "View details",
       marketplaceTitle: "Marketplace",
       marketplaceText:
@@ -138,7 +138,7 @@ const content = {
     jobs: {
       title: "Open Positions",
       intro:
-        "We are open to working with people who want to grow with our projects.",
+        "We are open to working with people who want to grow with us.",
       cards: [
         {
           title: "Driver",
@@ -150,7 +150,7 @@ const content = {
         },
         {
           title: "Future Roles",
-          text: "Additional opportunities will open as the marketplace and platform expand.",
+          text: "Additional opportunities will open as the platform expand.",
         },
       ],
       cta: "Contact us",
