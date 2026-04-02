@@ -6,9 +6,9 @@ export const metadata: Metadata = {
   description:
     "CEA United develops flexible, practical, and scalable business solutions.",
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
+    icon: "/cea_favicon.ico",
+    shortcut: "/cea_favicon.ico",
+    apple: "/cea_favicon.ico",
   },
 };
 
