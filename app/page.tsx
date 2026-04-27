@@ -1,458 +1,288 @@
 "use client";
 
-import { useState } from "react";
-
-type Lang = "mn" | "en";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import SiteHeader from "@/components/siteheader";
+import SiteFooter from "@/components/sitefooter";
+import { Lang, readLang, withLang } from "@/lib/lang";
 
 const content: Record<Lang, any> = {
   mn: {
     nav: {
-      about: "Бидний тухай",
-      services: "Үйлчилгээ",
-      marketplace: "Marketplace",
-      jobs: "Нээлттэй ажлын байр",
+      services: "Үйл ажиллагаа",
+      news: "Мэдээ мэдээлэл",
       contact: "Холбоо барих",
     },
     hero: {
-      subtitle: "Бизнесийн тасралтгүй үйл ажиллагааг дэмжих шийдэл",
-      description:
-        "Бид уян хатан, хэрэгжихүйц, өсөх боломжтой бизнесийн шийдлүүдийг хөгжүүлнэ.",
-      primary: "Холбоо барих",
-      secondary: "Үйлчилгээ",
+      title: "Бүтээмжээ өсгө",
+      subtitle: "Tогтвортой хөгжилд чиглэсэн бодит шийдэл.",
+      primary: "Үйл ажиллагаа",
+      secondary: "Холбоо барих",
     },
-    about: {
-      title: "Бидний тухай",
-      description1:
-        "Бид байгууллагуудад тодорхой хэрэгцээ, тодорхой үнэ цэнтэй үйлчилгээг нийлүүлэхийг зорьж байна.",
-      description2:
-        "Бид зах зээлд шаардлагатай бөгөөд бодит хэрэгцээнд нийцсэн, өргөжих боломжтой бизнесийн шийдлүүдийг хөгжүүлнэ.",
-      description3:
-        "Цаашид өөр хоорондоо уялдаа хамааралтай, цаг үедээ нийцсэн бүтээгдэхүүнийг түгээх болно.",
-    },
-    services: {
-      title: "Үйлчилгээ",
-      intro: "Хэрэгжүүлж байгаа төслүүд",
-      veloraTitle: "Velora Mobility",
-      veloraText:
-        "Байгууллага болон тодорхой хэрэгцээтэй харилцагчдад зориулсан жолоочийн outsourcing үйлчилгээ.",
-      veloraSubtext:
-        "Та өөрийн бизнесийн болон хувийн хэрэгцээндээ нийцсэн нөхцлөөр манай үйлчилгээг авах боломжтой.",
-      veloraButton: "Дэлгэрэнгүй",
-      marketplaceTitle: "Marketplace",
-      marketplaceText:
-        "Үйлчилгээ, хэрэгцээ, гүйцэтгэлийг холбох платформ.",
-      marketplaceSubtext:
-        "A platform connecting demand, services, and execution.",
-      marketplaceBadge: "Coming soon",
-    },
-    marketplace: {
-      title: "Marketplace",
-      badge: "Coming soon",
-      text1: "CEA United Marketplace тун удахгүй.",
-      text2:
-        "Ирээдүйд үйлчилгээ, захиалга, хамтын ажиллагааны урсгалыг илүү хялбар холбосон цогц платформ хэлбэрээр хөгжүүлнэ.",
-    },
-    jobs: {
-      title: "Нээлттэй ажлын байр",
-      intro:
-        "Манай байгууллагатай хамт өсөх сонирхолтой бүх хүмүүст боломж нээлттэй.",
-      cards: [
-        {
-          title: "Жолооч",
-          text: "Velora Mobility үйлчилгээний хүрээнд хариуцлагатай, цаг баримталдаг жолооч нартай хамтран ажиллана.",
-        },
-        {
-          title: "Оператор / Диспетчер",
-          text: "Үйл ажиллагаа, зохицуулалт, хяналтын чиглэлд ажиллах боломж.",
-        },
-        {
-          title: "Ирээдүйн нээлттэй боломжууд",
-          text: "Marketplace өсөхийн хэрээр шинэ ажлын байрууд нэмэгдэнэ.",
-        },
-      ],
-      cta: "Холбоо барих",
-    },
-    contact: {
-      title: "Холбоо барих",
-      description:
-        "Хамтын ажиллагаа, үйлчилгээ, ажлын байртай холбоотойгоор бидэнтэй холбогдоно уу.",
-      phoneLabel: "Утас",
-      emailLabel: "И-мэйл",
-      addressLabel: "Байршил",
-      cta: "И-мэйл илгээх",
-      phone: "+976 9500 8530",
-      email: "info@ceaunited.com",
-      address: "Ulaanbaatar, Mongolia",
-    },
-    footer: "© 2026 CEA United. All rights reserved.",
+    servicesTitle: "Манай үйл ажиллагаа",
+    services: [
+      {
+        title: "Гадаад худалдааны зөвлөх үйлчилгээ",
+        text: "Импорт, экспорттой холбоотойгоор таны бизнесийг өргөжүүлэхэд бид тусална.",
+        href: "/activities/trade",
+        external: false,
+      },
+      {
+        title: "Хүний нөөцийн аутсорсинг",
+        text: "Аутсорсинг хийх боломжтой орон тоог бид хангана.",
+        href: "/activities/hr-outsourcing",
+        external: false,
+      },
+      {
+        title: "Байгаль орчин ба нийгмийн хөгжлийн хөтөлбөрүүд",
+        text: "Байгаль орчин, нийгмийн сайн сайхан байдалд чиглэсэн төсөл хөтөлбөрүүдийг шат дараалалтайгаар хөгжүүлэн ажиллана.",
+        href: "https://ngo.ceaunited.com",
+        external: true,
+      },
+    ],
+    principlesTitle: "Үйл ажиллагааны зарчим",
+    principles: [
+      {
+        title: "Бэлтгэл",
+        text: "Асуудлыг илрүүлэх Хэрэгцээг тодорхойлох Стандартад нийцүүлэх Төлөвлөх",
+      },
+      {
+        title: "Гүйцэтгэл",
+        text: "Төлөвлөгөөг хэрэгжүүлэн хэрэгцээг хангах замаар асуудлыг шийдвэрлэнэ.",
+      },
+      {
+        title: "Сайжруулах",
+        text: "Үр дүнд суурилан зөрүүг арилгах замаар сайжруулалтын шинэ боломжуудыг санал болгоно.",
+      },
+    ],
+    valueTitle: "Биднийг сонгох шалтгаан",
+    valueIntro: "Бид үйл ажиллагаандаа дараах үнэт зүйлсийг эрхэмлэдэг.",
+    values: ["Үйлчилгээний чанар", "Урт хугацааны хамтын ажиллагаа", "Эргэх холбоо"],
   },
+
   en: {
     nav: {
-      about: "About",
-      services: "Services",
-      marketplace: "Marketplace",
-      jobs: "Open Positions",
-      contact: "Contact",
+      services: "Our Services",
+      news: "Reports and other informations",
+      contact: "Contacts",
     },
     hero: {
-      subtitle: "A solution that supports continuous business operations",
-      description:
-        "Flexible, practical, and scalable solutions built for real business needs.",
-      primary: "Contact",
-      secondary: "Services",
+      title: "Expand your capacity",
+      subtitle: "Practical Solutions for Sustainable Future",
+      primary: "Our Services",
+      secondary: "Contacts",
     },
-    about: {
-      title: "About",
-      description1:
-        "Our company aims to deliver services with clear purpose and defined value for organizations.",
-      description2:
-        "We develop scalable business solutions built around real market needs.",
-      description3:
-        "We build interconnected products that evolve with time and remain relevant.",
+    servicesTitle: "Our services",
+    services: [
+      {
+        title: "End-to-end Trade Management",
+        text: "We empower your business expansion through end-to-end trade management.",
+        href: "/activities/trade",
+        external: false,
+      },
+      {
+        title: "HR Outsourcing",
+        text: "We provide professional manpower outsourcing solutions tailored for the local market.",
+        href: "/activities/hr-outsourcing",
+        external: false,
+      },
+      {
+        title: "Environmental and Social Development Programs",
+        text: "We develop and implement step-by-step programs aimed at environmental sustainability and social well-being.",
+        href: "https://ngo.ceaunited.com",
+        external: true,
+      },
+    ],
+    principlesTitle: "Operational Principles",
+    principles: [
+      {
+        title: "Preparation",
+        text: "Identify issues, define needs, ensure compliance with standards, and develop a strategic plan.",
+      },
+      {
+        title: "Execution",
+        text: "Solve problems by implementing the plan and meeting the identified needs.",
+      },
+      {
+        title: "Improvement",
+        text: "Propose new opportunities for enhancement by bridging gaps based on performance results.",
+      },
+    ],
+    valueTitle: "Value Proposition",
+    valueIntro: "",
+    values: [
+      "Excellence in Quality: We adhere to rigorous standards to ensure premium service delivery in every project we undertake.",
+      "Strategic Partnerships: We go beyond transactions, focusing on building sustainable, long-term relationships with our clients.",
+      "Transparent Communication: A robust feedback loop is at the heart of our operations, ensuring we stay aligned with your goals.",
+    ],
+  },
+
+  jp: {
+    nav: {
+      services: "事業内容",
+      news: "活動報告・ニュース",
+      contact: "お問い合わせ",
     },
-    services: {
-      title: "Services",
-      intro:
-        "CEA United builds focused services and platforms designed to scale in structured phases.",
-      veloraTitle: "Velora Mobility",
-      veloraText:
-        "A driver outsourcing service designed for organizations and clients with defined mobility needs.",
-      veloraSubtext:
-        "Our services can be tailored to meet both your business and personal needs.",
-      veloraButton: "View details",
-      marketplaceTitle: "Marketplace",
-      marketplaceText:
-        "A platform connecting services, demand, and execution.",
-      marketplaceSubtext:
-        "Designed to bring requests, providers, and workflows together.",
-      marketplaceBadge: "Coming soon",
+    hero: {
+      title: "可能性を広げる",
+      subtitle: "持続可能な発展に向けた具体的な解決策",
+      primary: "事業内容",
+      secondary: "お問い合わせ",
     },
-    marketplace: {
-      title: "Marketplace",
-      badge: "Coming soon",
-      text1: "CEA United Marketplace is on the way.",
-      text2:
-        "It will evolve into a platform that connects services, requests, and collaboration more efficiently.",
-    },
-    jobs: {
-      title: "Open Positions",
-      intro: "We are open to working with people who want to grow with us.",
-      cards: [
-        {
-          title: "Driver",
-          text: "We work with responsible and punctual drivers under Velora Mobility.",
-        },
-        {
-          title: "Operator / Dispatcher",
-          text: "Opportunities in coordination, monitoring, and operational control.",
-        },
-        {
-          title: "Future Roles",
-          text: "Additional opportunities will open as the platform expand.",
-        },
-      ],
-      cta: "Contact us",
-    },
-    contact: {
-      title: "Contact",
-      description:
-        "Get in touch with us regarding collaboration, services, or open positions.",
-      phoneLabel: "Phone",
-      emailLabel: "Email",
-      addressLabel: "Location",
-      cta: "Send email",
-      phone: "+976 9923 9036",
-      email: "info@ceaunited.com",
-      address: "Ulaanbaatar, Mongolia",
-    },
-    footer: "© 2026 CEA United. All rights reserved.",
+    servicesTitle: "活動内容",
+    services: [
+      {
+        title: "貿易実務・伴奏型サポート",
+        text: "貿易実務の包括的なサポートで、貴社のビジネス拡大を実現します。",
+        href: "/activities/trade",
+        external: false,
+      },
+      {
+        title: "人材アウトソーシング",
+        text: "ウランバートル市内での専門運転手および人材派遣ソリューションを提供します。",
+        href: "/activities/hr-outsourcing",
+        external: false,
+      },
+      {
+        title: "環境・社会開発プログラム",
+        text: "環境の持続可能性および社会的な福祉の向上を目的としたプログラムを段階的に開発・実施します。",
+        href: "https://ngo.ceaunited.com",
+        external: true,
+      },
+    ],
+    principlesTitle: "運用原則",
+    principles: [
+      {
+        title: "準備",
+        text: "課題の抽出、ニーズの特定、標準化への適合、 計画立案。",
+      },
+      {
+        title: "実行",
+        text: "計画の実施によりニーズを満たし、課題を解決します。",
+      },
+      {
+        title: "改善",
+        text: "実績に基づきギャップを解消し、新たな改善の機会を提案します。",
+      },
+    ],
+    valueTitle: "当社の強み",
+    valueIntro: "",
+    values: [
+      "徹底した品質管理: 高い基準を遵守し、細部にまでこだわった妥協のない品質を追求します。",
+      "長期的な信頼関係: 単なる取引関係を超え、共に成長できる持続可能なパートナーシップを構築します。",
+      "密なコミュニケーション: 迅速かつ透明性の高いフィードバック体制により、常にお客様のご要望を最優先に対応します。",
+    ],
   },
 };
 
-export default function Page() {
+export default function HomePage() {
   const [lang, setLang] = useState<Lang>("mn");
-  const t = content[lang as Lang];
 
-  const scrollToId = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  useEffect(() => {
+    setLang(readLang());
+  }, []);
+
+  const t = content[lang];
 
   return (
     <main className="min-h-screen bg-[#0f1a17] text-[#f5f1e8]">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0f1a17]/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <button onClick={() => scrollToId("hero")}>
-            <img
-              src="/cea-logo.png"
-              alt="CEA United"
-              className="h-12 w-auto md:h-16"
-            />
-          </button>
+      <SiteHeader lang={lang} setLang={setLang} nav={t.nav} />
 
-          <nav className="hidden items-center gap-8 text-sm md:flex">
-            <button
-              onClick={() => scrollToId("about")}
-              className="transition hover:text-white/70"
-            >
-              {t.nav.about}
-            </button>
-            <button
-              onClick={() => scrollToId("services")}
-              className="transition hover:text-white/70"
-            >
-              {t.nav.services}
-            </button>
-            <button
-              onClick={() => scrollToId("marketplace")}
-              className="transition hover:text-white/70"
-            >
-              {t.nav.marketplace}
-            </button>
-            <button
-              onClick={() => scrollToId("jobs")}
-              className="transition hover:text-white/70"
-            >
-              {t.nav.jobs}
-            </button>
-            <button
-              onClick={() => scrollToId("contact")}
-              className="transition hover:text-white/70"
-            >
-              {t.nav.contact}
-            </button>
-          </nav>
+      <section className="mx-auto flex min-h-[92vh] max-w-7xl items-center px-6 py-20">
+        <div className="flex w-full flex-col items-center text-center">
+          <img src="/cea-logo.png" alt="CEA United" className="h-28 w-auto md:h-36" />
 
-          <div className="flex items-center gap-2 rounded-full border border-white/10 p-1 text-sm">
-            <button
-              onClick={() => setLang("mn")}
-              className={`rounded-full px-3 py-1 transition ${
-                lang === "mn" ? "bg-white text-black" : "text-white/70"
-              }`}
-            >
-              MN
-            </button>
-            <button
-              onClick={() => setLang("en")}
-              className={`rounded-full px-3 py-1 transition ${
-                lang === "en" ? "bg-white text-black" : "text-white/70"
-              }`}
-            >
-              EN
-            </button>
-          </div>
-        </div>
-      </header>
+          <h1 className="mt-8 max-w-4xl text-4xl font-semibold tracking-tight md:text-7xl">
+            {t.hero.title}
+          </h1>
 
-      <section
-        id="hero"
-        className="mx-auto flex min-h-[92vh] max-w-7xl items-center px-6 py-20"
-      >
-        <div className="w-full flex flex-col items-center text-center">
-          <img
-            src="/cea-logo.png"
-            alt="CEA United"
-            className="h-28 w-auto md:h-36"
-          />
-
-          <p className="mt-8 max-w-3xl text-2xl font-medium text-white/85 md:text-3xl">
+          <p className="mt-6 max-w-2xl text-base leading-8 text-white/70 md:text-xl">
             {t.hero.subtitle}
           </p>
 
-          <p className="mt-6 max-w-2xl text-base leading-8 text-white/65 md:text-lg">
-            {t.hero.description}
-          </p>
-
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <button
-              onClick={() => scrollToId("contact")}
+            <a
+              href="#services"
               className="rounded-full bg-[#d1b178] px-6 py-3 text-sm font-medium text-black transition hover:opacity-90"
             >
               {t.hero.primary}
-            </button>
+            </a>
 
-            <button
-              onClick={() => scrollToId("services")}
+            <Link
+              href={withLang("/contact", lang)}
               className="rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/5"
             >
               {t.hero.secondary}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-semibold md:text-5xl">
-              {t.about.title}
-            </h2>
-
-            <div className="mt-8 space-y-6 text-base leading-8 text-white/70 md:text-lg">
-              <p>{t.about.description1}</p>
-              <p>{t.about.description2}</p>
-              <p>{t.about.description3}</p>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
 
       <section id="services" className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-semibold md:text-5xl">
-              {t.services.title}
-            </h2>
-
-            <p className="mt-8 text-base leading-8 text-white/70 md:text-lg">
-              {t.services.intro}
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
-            <div className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8 transition hover:border-[#d8bc84]/40">
-              <h3 className="text-2xl font-medium">{t.services.veloraTitle}</h3>
-
-              <p className="mt-4 leading-7 text-white/70">
-                {t.services.veloraText}
-              </p>
-
-              <p className="mt-6 text-sm text-white/50">
-                {t.services.veloraSubtext}
-              </p>
-            </div>
-
-            <div className="rounded-[1.75rem] border border-[#c8a96b]/20 bg-[#c8a96b]/5 p-8">
-              <h3 className="text-2xl font-medium">
-                {t.services.marketplaceTitle}
-              </h3>
-
-              <p className="mt-4 leading-7 text-white/70">
-                {t.services.marketplaceText}
-              </p>
-
-              <p className="mt-6 text-sm text-white/50">
-                {t.services.marketplaceSubtext}
-              </p>
-
-              <span className="mt-6 inline-block text-xs uppercase tracking-[0.2em] text-[#d8bc84]">
-                {t.services.marketplaceBadge}
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="marketplace" className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#f5f1e8]/[0.05] to-[#f5f1e8]/[0.02] p-10 md:p-14">
-            <div className="flex flex-wrap items-center gap-4">
-              <h2 className="text-3xl font-semibold md:text-5xl">
-                {t.marketplace.title}
-              </h2>
-
-              <span className="rounded-full border border-[#d8bc84]/30 bg-[#d8bc84]/10 px-4 py-1 text-xs uppercase tracking-[0.2em] text-[#d8bc84]">
-                {t.marketplace.badge}
-              </span>
-            </div>
-
-            <div className="mt-8 max-w-3xl space-y-5 text-base leading-8 text-white/70 md:text-lg">
-              <p>{t.marketplace.text1}</p>
-              <p>{t.marketplace.text2}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="jobs" className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-semibold md:text-5xl">
-              {t.jobs.title}
-            </h2>
-
-            <p className="mt-8 text-base leading-8 text-white/70 md:text-lg">
-              {t.jobs.intro}
-            </p>
-          </div>
+          <h2 className="text-3xl font-semibold md:text-5xl">{t.servicesTitle}</h2>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {t.jobs.cards.map((card: { title: string; text: string }) => (
-              <div
-                key={card.title}
-                className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8"
-              >
-                <h3 className="text-xl font-medium">{card.title}</h3>
-                <p className="mt-4 leading-7 text-white/65">{card.text}</p>
+            {t.services.map((card: any) =>
+              card.external ? (
+                <a
+                  key={card.title}
+                  href={`${card.href}?lang=${lang}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8 transition hover:border-[#d8bc84]/40 hover:bg-[#f5f1e8]/[0.07]"
+                >
+                  <h3 className="text-2xl font-medium">{card.title}</h3>
+                  <p className="mt-5 leading-7 text-white/70">{card.text}</p>
+                </a>
+              ) : (
+                <Link
+                  key={card.title}
+                  href={withLang(card.href, lang)}
+                  className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8 transition hover:border-[#d8bc84]/40 hover:bg-[#f5f1e8]/[0.07]"
+                >
+                  <h3 className="text-2xl font-medium">{card.title}</h3>
+                  <p className="mt-5 leading-7 text-white/70">{card.text}</p>
+                </Link>
+              )
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10">
+        <div className="mx-auto max-w-7xl px-6 py-24">
+          <h2 className="text-3xl font-semibold md:text-5xl">{t.principlesTitle}</h2>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {t.principles.map((item: any, index: number) => (
+              <div key={item.title} className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8">
+                <p className="text-sm tracking-[0.25em] text-[#d8bc84]">0{index + 1}</p>
+                <h3 className="mt-5 text-2xl font-medium">{item.title}</h3>
+                <p className="mt-5 leading-7 text-white/70">{item.text}</p>
               </div>
             ))}
           </div>
-
-          <div className="mt-10">
-            <button
-              onClick={() => scrollToId("contact")}
-              className="rounded-full bg-[#d1b178] px-6 py-3 text-sm font-medium text-black transition hover:opacity-90"
-            >
-              {t.jobs.cta}
-            </button>
-          </div>
         </div>
       </section>
 
-      <section id="contact" className="border-t border-white/10">
+      <section className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-            <div>
-              <h2 className="text-3xl font-semibold md:text-5xl">
-                {t.contact.title}
-              </h2>
+          <h2 className="text-3xl font-semibold md:text-5xl">{t.valueTitle}</h2>
 
-              <p className="mt-8 max-w-xl text-base leading-8 text-white/70 md:text-lg">
-                {t.contact.description}
-              </p>
-            </div>
+          {t.valueIntro && <p className="mt-6 text-white/70">{t.valueIntro}</p>}
 
-            <div className="rounded-[2rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8 md:p-10">
-              <div className="space-y-6 text-white/80">
-                <div className="border-b border-white/10 pb-5">
-                  <p className="text-sm text-white/45">{t.contact.phoneLabel}</p>
-                  <p className="mt-2 text-lg">{t.contact.phone}</p>
-                </div>
-
-                <div className="border-b border-white/10 pb-5">
-                  <p className="text-sm text-white/45">{t.contact.emailLabel}</p>
-                  <a
-                    href={`mailto:${t.contact.email}`}
-                    className="mt-2 block text-lg transition hover:text-[#d8bc84]"
-                  >
-                    {t.contact.email}
-                  </a>
-                </div>
-
-                <div className="pb-2">
-                  <p className="text-sm text-white/45">{t.contact.addressLabel}</p>
-                  <p className="mt-2 text-lg">{t.contact.address}</p>
-                </div>
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {t.values.map((item: string) => (
+              <div key={item} className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8">
+                <p className="leading-7 text-white/75">{item}</p>
               </div>
-
-              <a
-                href={`mailto:${t.contact.email}`}
-                className="mt-8 inline-flex rounded-full bg-[#d1b178] px-6 py-3 text-sm font-medium text-black transition hover:opacity-90"
-              >
-                {t.contact.cta}
-              </a>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <footer className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-8 text-sm text-white/40">
-          {t.footer}
-        </div>
-      </footer>
+      <SiteFooter lang={lang} />
     </main>
   );
 }
