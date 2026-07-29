@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "CEA United",
   description:
     "CEA United develops flexible, practical, and scalable business solutions.",
+    icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
