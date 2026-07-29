@@ -1,179 +1,70 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import SiteHeader from "@/components/siteheader";
-import SiteFooter from "@/components/sitefooter";
-import { Lang, readLang, withLang } from "@/lib/lang";
+import { Lang, readLang } from "@/lib/lang";
 
-const content: Record<Lang, any> = {
+type GatewayContent = {
+  business: {
+    title: string;
+    entity: string;
+    action: string;
+  };
+  nonprofit: {
+    title: string;
+    entity: string;
+    action: string;
+  };
+};
+
+const content: Record<Lang, GatewayContent> = {
   mn: {
-    nav: {
-      services: "Үйл ажиллагаа",
-      news: "Мэдээ мэдээлэл",
-      contact: "Холбоо барих",
+    business: {
+      title: "Бизнес консалтинг",
+      entity: "CEA United LLC",
+      action: "Нэвтрэх",
     },
-    hero: {
-      title: "Бүтээмжээ өсгө",
-      subtitle: "Tогтвортой хөгжилд чиглэсэн бодит шийдэл.",
-      primary: "Үйл ажиллагаа",
-      secondary: "Холбоо барих",
+    nonprofit: {
+      title: "Төрийн бус байгууллага",
+      entity: "CEA NGO",
+      action: "Нэвтрэх",
     },
-    servicesTitle: "Манай үйл ажиллагаа",
-    services: [
-      {
-        title: "Гадаад худалдааны зөвлөх үйлчилгээ",
-        text: "Импорт, экспорттой холбоотойгоор таны бизнесийг өргөжүүлэхэд бид тусална.",
-        href: "/activities/trade",
-        external: false,
-      },
-      {
-        title: "Хүний нөөцийн аутсорсинг",
-        text: "Аутсорсинг хийх боломжтой орон тоог бид хангана.",
-        href: "/activities/hr-outsourcing",
-        external: false,
-      },
-      {
-        title: "Байгаль орчин ба нийгмийн хөгжлийн хөтөлбөрүүд",
-        text: "Байгаль орчин, нийгмийн сайн сайхан байдалд чиглэсэн төсөл хөтөлбөрүүдийг шат дараалалтайгаар хөгжүүлэн ажиллана.",
-        href: "https://ngo.ceaunited.com",
-        external: true,
-      },
-    ],
-    principlesTitle: "Үйл ажиллагааны зарчим",
-    principles: [
-      {
-        title: "Бэлтгэл",
-        text: "Асуудлыг илрүүлэх Хэрэгцээг тодорхойлох Стандартад нийцүүлэх Төлөвлөх",
-      },
-      {
-        title: "Гүйцэтгэл",
-        text: "Төлөвлөгөөг хэрэгжүүлэн хэрэгцээг хангах замаар асуудлыг шийдвэрлэнэ.",
-      },
-      {
-        title: "Сайжруулах",
-        text: "Үр дүнд суурилан зөрүүг арилгах замаар сайжруулалтын шинэ боломжуудыг санал болгоно.",
-      },
-    ],
-    valueTitle: "Биднийг сонгох шалтгаан",
-    valueIntro: "Бид үйл ажиллагаандаа дараах үнэт зүйлсийг эрхэмлэдэг.",
-    values: ["Үйлчилгээний чанар", "Урт хугацааны хамтын ажиллагаа", "Эргэх холбоо"],
   },
 
   en: {
-    nav: {
-      services: "Our Services",
-      news: "Reports and other informations",
-      contact: "Contacts",
+    business: {
+      title: "Business Consulting",
+      entity: "CEA United LLC",
+      action: "Enter",
     },
-    hero: {
-      title: "Expand your capacity",
-      subtitle: "Practical Solutions for Sustainable Future",
-      primary: "Our Services",
-      secondary: "Contacts",
+    nonprofit: {
+      title: "Nonprofit",
+      entity: "CEA NGO",
+      action: "Enter",
     },
-    servicesTitle: "Our services",
-    services: [
-      {
-        title: "End-to-end Trade Management",
-        text: "We empower your business expansion through end-to-end trade management.",
-        href: "/activities/trade",
-        external: false,
-      },
-      {
-        title: "HR Outsourcing",
-        text: "We provide professional manpower outsourcing solutions tailored for the local market.",
-        href: "/activities/hr-outsourcing",
-        external: false,
-      },
-      {
-        title: "Environmental and Social Development Programs",
-        text: "We develop and implement step-by-step programs aimed at environmental sustainability and social well-being.",
-        href: "https://ngo.ceaunited.com",
-        external: true,
-      },
-    ],
-    principlesTitle: "Operational Principles",
-    principles: [
-      {
-        title: "Preparation",
-        text: "Identify issues, define needs, ensure compliance with standards, and develop a strategic plan.",
-      },
-      {
-        title: "Execution",
-        text: "Solve problems by implementing the plan and meeting the identified needs.",
-      },
-      {
-        title: "Improvement",
-        text: "Propose new opportunities for enhancement by bridging gaps based on performance results.",
-      },
-    ],
-    valueTitle: "Value Proposition",
-    valueIntro: "",
-    values: [
-      "Excellence in Quality: We adhere to rigorous standards to ensure premium service delivery in every project we undertake.",
-      "Strategic Partnerships: We go beyond transactions, focusing on building sustainable, long-term relationships with our clients.",
-      "Transparent Communication: A robust feedback loop is at the heart of our operations, ensuring we stay aligned with your goals.",
-    ],
   },
 
   jp: {
-    nav: {
-      services: "事業内容",
-      news: "活動報告・ニュース",
-      contact: "お問い合わせ",
+    business: {
+      title: "ビジネスコンサルティング",
+      entity: "CEA United LLC",
+      action: "進む",
     },
-    hero: {
-      title: "可能性を広げる",
-      subtitle: "持続可能な発展に向けた具体的な解決策",
-      primary: "事業内容",
-      secondary: "お問い合わせ",
+    nonprofit: {
+      title: "非営利団体",
+      entity: "CEA NGO",
+      action: "進む",
     },
-    servicesTitle: "活動内容",
-    services: [
-      {
-        title: "貿易実務・伴奏型サポート",
-        text: "貿易実務の包括的なサポートで、貴社のビジネス拡大を実現します。",
-        href: "/activities/trade",
-        external: false,
-      },
-      {
-        title: "人材アウトソーシング",
-        text: "ウランバートル市内での専門運転手および人材派遣ソリューションを提供します。",
-        href: "/activities/hr-outsourcing",
-        external: false,
-      },
-      {
-        title: "環境・社会開発プログラム",
-        text: "環境の持続可能性および社会的な福祉の向上を目的としたプログラムを段階的に開発・実施します。",
-        href: "https://ngo.ceaunited.com",
-        external: true,
-      },
-    ],
-    principlesTitle: "運用原則",
-    principles: [
-      {
-        title: "準備",
-        text: "課題の抽出、ニーズの特定、標準化への適合、 計画立案。",
-      },
-      {
-        title: "実行",
-        text: "計画の実施によりニーズを満たし、課題を解決します。",
-      },
-      {
-        title: "改善",
-        text: "実績に基づきギャップを解消し、新たな改善の機会を提案します。",
-      },
-    ],
-    valueTitle: "当社の強み",
-    valueIntro: "",
-    values: [
-      "徹底した品質管理: 高い基準を遵守し、細部にまでこだわった妥協のない品質を追求します。",
-      "長期的な信頼関係: 単なる取引関係を超え、共に成長できる持続可能なパートナーシップを構築します。",
-      "密なコミュニケーション: 迅速かつ透明性の高いフィードバック体制により、常にお客様のご要望を最優先に対応します。",
-    ],
   },
 };
+
+const languageLabels: Record<Lang, string> = {
+  mn: "MN",
+  en: "EN",
+  jp: "日本語",
+};
+
+const BUSINESS_URL = "https://business.ceaunited.com";
+const NGO_URL = "https://ngo.ceaunited.com";
 
 export default function HomePage() {
   const [lang, setLang] = useState<Lang>("mn");
@@ -184,105 +75,160 @@ export default function HomePage() {
 
   const t = content[lang];
 
+  const selectLanguage = (nextLang: Lang) => {
+    setLang(nextLang);
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("lang", nextLang);
+    window.history.replaceState({}, "", url.toString());
+  };
+
   return (
-    <main className="min-h-screen bg-[#0f1a17] text-[#f5f1e8]">
-      <SiteHeader lang={lang} setLang={setLang} nav={t.nav} />
+    <main className="relative min-h-screen overflow-hidden bg-[#f3f0e8] text-[#083F51]">
+      {/* LANGUAGE SWITCHER */}
+      <header className="absolute inset-x-0 top-0 z-30">
+        <div className="flex justify-end px-6 py-6 md:px-10 md:py-8">
+          <nav
+            aria-label="Language selection"
+            className="flex items-center gap-5"
+          >
+            {(["mn", "en", "jp"] as Lang[]).map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => selectLanguage(item)}
+                className={`relative pb-1 text-[10px] font-semibold tracking-[0.12em] transition-colors ${
+                  lang === item
+                    ? "text-[#083F51]"
+                    : "text-[#083F51]/40 hover:text-[#083F51]/70"
+                }`}
+              >
+                {languageLabels[item]}
 
-      <section className="mx-auto flex min-h-[92vh] max-w-7xl items-center px-6 py-20">
-        <div className="flex w-full flex-col items-center text-center">
-          <img src="/cea-logo.png" alt="CEA United" className="h-28 w-auto md:h-36" />
-
-          <h1 className="mt-8 max-w-4xl text-4xl font-semibold tracking-tight md:text-7xl">
-            {t.hero.title}
-          </h1>
-
-          <p className="mt-6 max-w-2xl text-base leading-8 text-white/70 md:text-xl">
-            {t.hero.subtitle}
-          </p>
-
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <a
-              href="#services"
-              className="rounded-full bg-[#d1b178] px-6 py-3 text-sm font-medium text-black transition hover:opacity-90"
-            >
-              {t.hero.primary}
-            </a>
-
-            <Link
-              href={withLang("/contact", lang)}
-              className="rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/5"
-            >
-              {t.hero.secondary}
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section id="services" className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <h2 className="text-3xl font-semibold md:text-5xl">{t.servicesTitle}</h2>
-
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {t.services.map((card: any) =>
-              card.external ? (
-                <a
-                  key={card.title}
-                  href={`${card.href}?lang=${lang}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8 transition hover:border-[#d8bc84]/40 hover:bg-[#f5f1e8]/[0.07]"
-                >
-                  <h3 className="text-2xl font-medium">{card.title}</h3>
-                  <p className="mt-5 leading-7 text-white/70">{card.text}</p>
-                </a>
-              ) : (
-                <Link
-                  key={card.title}
-                  href={withLang(card.href, lang)}
-                  className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8 transition hover:border-[#d8bc84]/40 hover:bg-[#f5f1e8]/[0.07]"
-                >
-                  <h3 className="text-2xl font-medium">{card.title}</h3>
-                  <p className="mt-5 leading-7 text-white/70">{card.text}</p>
-                </Link>
-              )
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <h2 className="text-3xl font-semibold md:text-5xl">{t.principlesTitle}</h2>
-
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {t.principles.map((item: any, index: number) => (
-              <div key={item.title} className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8">
-                <p className="text-sm tracking-[0.25em] text-[#d8bc84]">0{index + 1}</p>
-                <h3 className="mt-5 text-2xl font-medium">{item.title}</h3>
-                <p className="mt-5 leading-7 text-white/70">{item.text}</p>
-              </div>
+                {lang === item && (
+                  <span className="absolute inset-x-0 -bottom-px h-px bg-[#083F51]" />
+                )}
+              </button>
             ))}
-          </div>
+          </nav>
         </div>
-      </section>
+      </header>
 
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <h2 className="text-3xl font-semibold md:text-5xl">{t.valueTitle}</h2>
+      {/* DESKTOP */}
+      <div className="hidden min-h-screen md:grid md:grid-cols-2">
+        {/* BUSINESS */}
+        <a
+          href={`${BUSINESS_URL}?lang=${lang}`}
+          className="group relative flex min-h-screen items-center bg-[#083F51] px-10 text-[#f5f1e8] lg:px-16"
+        >
+          <div className="mx-auto w-full max-w-xl">
+            <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-white/45">
+              {t.business.entity}
+            </p>
 
-          {t.valueIntro && <p className="mt-6 text-white/70">{t.valueIntro}</p>}
+            <h1
+              className="mt-7 max-w-lg text-[clamp(2.4rem,3.8vw,4.6rem)] font-normal leading-[1.05] tracking-[-0.03em]"
+              style={{
+                fontFamily: "Georgia, 'Times New Roman', serif",
+              }}
+            >
+              {t.business.title}
+            </h1>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {t.values.map((item: string) => (
-              <div key={item} className="rounded-[1.75rem] border border-white/10 bg-[#f5f1e8]/[0.04] p-8">
-                <p className="leading-7 text-white/75">{item}</p>
-              </div>
-            ))}
+            <div className="mt-10 flex items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.16em]">
+              <span>{t.business.action}</span>
+
+              <span className="transition-transform duration-300 group-hover:translate-x-2">
+                →
+              </span>
+            </div>
           </div>
-        </div>
-      </section>
+        </a>
 
-      <SiteFooter lang={lang} />
+        {/* NONPROFIT */}
+        <a
+          href={`${NGO_URL}?lang=${lang}`}
+          className="group relative flex min-h-screen items-center bg-[#f3f0e8] px-10 text-[#083F51] lg:px-16"
+        >
+          <div className="mx-auto w-full max-w-xl">
+            <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-[#083F51]/45">
+              {t.nonprofit.entity}
+            </p>
+
+            <h1
+              className="mt-7 max-w-lg text-[clamp(2.4rem,3.8vw,4.6rem)] font-normal leading-[1.05] tracking-[-0.03em]"
+              style={{
+                fontFamily: "Georgia, 'Times New Roman', serif",
+              }}
+            >
+              {t.nonprofit.title}
+            </h1>
+
+            <div className="mt-10 flex items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.16em]">
+              <span>{t.nonprofit.action}</span>
+
+              <span className="transition-transform duration-300 group-hover:translate-x-2">
+                →
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      {/* MOBILE */}
+      <div className="grid min-h-screen grid-rows-2 pt-16 md:hidden">
+        {/* BUSINESS MOBILE */}
+        <a
+          href={`${BUSINESS_URL}?lang=${lang}`}
+          className="group flex items-center bg-[#083F51] px-6 text-[#f5f1e8]"
+        >
+          <div>
+            <p className="text-[9px] font-medium uppercase tracking-[0.22em] text-white/45">
+              {t.business.entity}
+            </p>
+
+            <h1
+              className="mt-5 max-w-xs text-[2.25rem] font-normal leading-[1.05] tracking-[-0.03em]"
+              style={{
+                fontFamily: "Georgia, 'Times New Roman', serif",
+              }}
+            >
+              {t.business.title}
+            </h1>
+
+            <div className="mt-7 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.14em]">
+              <span>{t.business.action}</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        {/* NONPROFIT MOBILE */}
+        <a
+          href={`${NGO_URL}?lang=${lang}`}
+          className="group flex items-center bg-[#f3f0e8] px-6 text-[#083F51]"
+        >
+          <div>
+            <p className="text-[9px] font-medium uppercase tracking-[0.22em] text-[#083F51]/45">
+              {t.nonprofit.entity}
+            </p>
+
+            <h1
+              className="mt-5 max-w-xs text-[2.25rem] font-normal leading-[1.05] tracking-[-0.03em]"
+              style={{
+                fontFamily: "Georgia, 'Times New Roman', serif",
+              }}
+            >
+              {t.nonprofit.title}
+            </h1>
+
+            <div className="mt-7 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.14em]">
+              <span>{t.nonprofit.action}</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+      </div>
     </main>
   );
 }
